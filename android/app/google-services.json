@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "111773939608",
+    "project_id": "upfm-9c37d",
+    "storage_bucket": "upfm-9c37d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111773939608:android:f8f0e0a0fc9a84f76b9ded",
+        "android_client_info": {
+          "package_name": "nz.co.upfm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111773939608-fba1d03hll5fvujdf2g56boho3v9jvgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nz.co.upfm",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "111773939608-08rg3bs6n2huugq77oa0bm7h1do58cp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5eCdJPSxtBfo9BULUiaay3W-zcGokOjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111773939608-08rg3bs6n2huugq77oa0bm7h1do58cp3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
