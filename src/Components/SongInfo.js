@@ -33,19 +33,19 @@ const ArtImage = props => {
       <Image
         style={styles.artThumb}
         resizeMode={'cover'}
-        source={art ? {uri: art} : Images.background}
+        source={art ? {uri: art} : Images.art}
       />
     </>
   );
 };
 
-const Genre = props => {
-  const genre = useSelector(state => state.songinfo.si.genre);
+const Playlist = props => {
+  const playlist = useSelector(state => state.songinfo.si.playlist);
 
   return (
     <>
       <Text numberOfLines={1} style={{color: 'white'}}>
-        {genre}
+        {playlist}
       </Text>
     </>
   );
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
 });
 
 export default SongTitle;
-export {DJName, ArtImage, Genre, DurationProgress};
+export {DJName, ArtImage, Playlist, DurationProgress};

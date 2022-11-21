@@ -7,8 +7,6 @@ import {
   SectionList,
 } from 'react-native';
 import SvgIcon from './SvgIcons';
-import SystemSetting from 'react-native-system-setting';
-import Slider from '@react-native-community/slider';
 
 import Colors from '../Colors';
 import Constants from '../Constants';
@@ -36,10 +34,10 @@ const RecentSongs = props => {
           <TouchableOpacity
             style={{
               position: 'absolute',
-              bottom: 289,
-              right: 37,
-              width: 20,
-              height: 20,
+              bottom: 275,
+              right: 28,
+              width: 47,
+              height: 47,
             }}
             onPress={() => {
               setRecentVisible(0);

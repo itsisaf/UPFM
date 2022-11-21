@@ -6,30 +6,30 @@ import {
   Animated,
   Easing,
   Text,
-  Linking,
   Platform,
   StatusBar,
-  Share,
+  Linking,
 } from 'react-native';
-import Rate, {AndroidMarket} from 'react-native-rate';
 
 import SvgIcon from '../Components/SvgIcons';
 import Colors from '../Colors';
 import Constants from '../Constants';
 
+const chatUrl =
+  'https://chat.upfm.co.nz/embed/474247737798426644?username=Live-Listener';
+const supportUrl = 'https://upfm.co.nz/support/';
+const timetbleUrl = 'https://upfm.co.nz/showtimes/';
+const eventsUrl = 'https://upfm.co.nz/info/';
+
 const Menu = props => {
   const [menuVisible, setMenuVisible] = useState(0);
   const [moveranim, setMoverAnim] = useState(
-    new Animated.Value(-Constants.Dimension.ScreenWidth()),
+    new Animated.Value(+Constants.Dimension.ScreenWidth()),
   );
-  // const {moveranim, visible, setMenuVisible} = props;
-
-  const GOOGLE_PACKAGE_NAME = 'nz.co.upfm';
-  const APPLE_STORE_ID = 'id2193813192';
 
   const hideMenu = () => {
     Animated.timing(moveranim, {
-      toValue: -Constants.Dimension.ScreenWidth(),
+      toValue: +Constants.Dimension.ScreenWidth(),
       duration: 250,
       easing: Easing.circle,
       useNativeDriver: true,
@@ -38,14 +38,15 @@ const Menu = props => {
     });
   };
 
-  const naviGate = action => {
+  const naviGate = url => {
     hideMenu();
-    if (!props.isChat) {
-      props.navigation.navigate('webV', {action: action});
-    } else {
-      props.setAction(action);
-      props.setBufferVisible(!0);
-    }
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + this.props.url);
+      }
+    });
   };
   const showMenu = () => {
     setMenuVisible(!0);
@@ -55,49 +56,6 @@ const Menu = props => {
       easing: Easing.circle,
       useNativeDriver: true,
     }).start();
-  };
-
-  const openStore = () => {
-    const options = {
-      AppleAppID: APPLE_STORE_ID,
-      GooglePackageName: GOOGLE_PACKAGE_NAME,
-      preferredAndroidMarket: AndroidMarket.Google,
-      preferInApp: true,
-      openAppStoreIfInAppFails: true,
-      fallbackPlatformURL: 'https://upfm.co.nz/info/',
-    };
-    Rate.rate(options, (success, errorMessage) => {
-      if (success) {
-        // this technically only tells us if the user successfully went to the Review Page. Whether they actually did anything, we do not know.
-        console.log('went to store');
-      }
-      if (errorMessage) {
-        // errorMessage comes from the native code. Useful for debugging, but probably not for users to view
-        console.error(`Example page Rate.rate() error: ${errorMessage}`);
-      }
-    });
-  };
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        title: 'UpFM',
-        message: 'Here I found an amazing Radio FM Application',
-        url:
-          'https://play.google.com/store/apps/details?id=' +
-          GOOGLE_PACKAGE_NAME,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
   };
 
   return (
@@ -123,7 +81,7 @@ const Menu = props => {
             <Text
               style={styles.menuItems}
               onPress={() => {
-                naviGate('chat');
+                naviGate(chatUrl);
               }}>
               {' '}
               LIVE Chat
@@ -131,7 +89,7 @@ const Menu = props => {
             <Text
               style={styles.menuItems}
               onPress={() => {
-                naviGate('support');
+                naviGate(supportUrl);
               }}>
               {' '}
               Support Us
@@ -139,7 +97,7 @@ const Menu = props => {
             <Text
               style={styles.menuItems}
               onPress={() => {
-                naviGate('timetable');
+                naviGate(timetbleUrl);
               }}>
               {' '}
               Show Timetable
@@ -147,18 +105,10 @@ const Menu = props => {
             <Text
               style={styles.menuItems}
               onPress={() => {
-                naviGate('events');
+                naviGate(eventsUrl);
               }}>
               {' '}
               Events
-            </Text>
-            <Text style={styles.menuItems} onPress={openStore}>
-              {' '}
-              Rate App
-            </Text>
-            <Text style={styles.menuItems} onPress={onShare}>
-              {' '}
-              Share
             </Text>
           </View>
         </Animated.View>
@@ -171,8 +121,9 @@ const styles = StyleSheet.create({
   menuOverlay: {
     top: Platform.OS == 'ios' ? StatusBar.currentHeight : 0,
     position: 'absolute',
-    width: Constants.Dimension.ScreenWidth(),
+    width: Constants.Dimension.ScreenWidth(0.816),
     height: Constants.Dimension.ScreenHeight(),
+    right: 0,
     backgroundColor: Colors.zinnwaldite,
     alignItems: 'flex-end',
     justifyContent: 'center',
@@ -189,8 +140,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 64,
     right: 37,
-    width: 20,
-    height: 20,
+    width: 47,
+    height: 47,
   },
 });
 

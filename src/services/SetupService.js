@@ -4,24 +4,21 @@ import TrackPlayer, {
 } from 'react-native-track-player';
 
 export const SetupService = async () => {
-  let isSetup = false;
   try {
     await TrackPlayer.getCurrentTrack();
-    isSetup = true;
+    return true;
   } catch {
-    await TrackPlayer.setupPlayer();
-    await TrackPlayer.updateOptions({
-      android: {
-        appKilledPlaybackBehavior:
-          AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
-      },
-      capabilities: [Capability.Play, Capability.Pause],
-      compactCapabilities: [Capability.Play, Capability.Pause],
-      progressUpdateEventInterval: 2,
+    return await TrackPlayer.setupPlayer().then(() => {
+      TrackPlayer.updateOptions({
+        stopWithApp: true,
+        android: {
+          appKilledPlaybackBehavior:
+            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+        },
+        capabilities: [Capability.Play, Capability.Pause],
+        compactCapabilities: [Capability.Play, Capability.Pause],
+        progressUpdateEventInterval: 0,
+      });
     });
-
-    isSetup = true;
-  } finally {
-    return isSetup;
   }
 };

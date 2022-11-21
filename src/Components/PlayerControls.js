@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import TrackPlayer, {Event} from 'react-native-track-player';
-
-import {AddStream, SetupService} from '../services';
+import {AddStream} from '../services';
 import SvgIcon from '../Components/SvgIcons';
 import Spinner from '../Components/Spinner';
 
@@ -14,20 +13,30 @@ export const PlayerControls = () => {
     TrackPlayer.addEventListener(Event.PlaybackState, event => {
       setPstate(event.state);
     });
+
+    TrackPlayer.addEventListener(Event.RemotePause, () => {
+      console.log('Event.RemotePause');
+      resetPlayer();
+    });
+
+    TrackPlayer.addEventListener(Event.RemotePlay, () => {
+      playStream();
+    });
   }, []);
+  const resetPlayer = () => {
+    TrackPlayer.pause();
+  };
 
   const playRadio = () => {
     if (pstate == 'playing') {
-      TrackPlayer.reset();
+      resetPlayer();
     } else {
       playStream();
     }
   };
   async function playStream() {
     setAutoPlay(1);
-    AddStream().then(() => {
-      TrackPlayer.play();
-    });
+    AddStream(1);
   }
   const getPlayIcon = () => {
     if (pstate == 'playing') {
@@ -42,19 +51,6 @@ export const PlayerControls = () => {
       return 'play';
     }
   };
-
-  useEffect(() => {
-    async function run() {
-      const isSetup = await SetupService();
-
-      const queue = await TrackPlayer.getQueue();
-      if (isSetup && queue.length <= 0) {
-        await AddStream();
-      }
-    }
-
-    run();
-  }, []);
 
   return (
     <TouchableOpacity onPress={playRadio}>

@@ -14,8 +14,8 @@ export function PushController(handleNotification) {
     senderID: '111773939608',
     permissions: {
       alert: true,
-      badge: true,
-      sound: true,
+      // badge: true,
+      // sound: true,
     },
     popInitialNotification: true,
     requestPermissions: Platform.OS === 'ios',

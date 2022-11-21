@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState, useRef} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -8,36 +8,51 @@ import {
   TouchableOpacity,
   Platform,
   LogBox,
+  Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {MultiplyBlendColor} from 'react-native-image-filter-kit';
 import SvgIcon from '../Components/SvgIcons';
 import Menu from '../Components/Menu';
 import {PlayerControls} from '../Components';
-import {WebSocketService} from '../services';
+import {BlurView} from '@react-native-community/blur';
+
 import Volume from '../Components/Volume';
 import RecentSongs from '../Components/RecentSongs';
 import SongTitle, {
   DJName,
   ArtImage,
-  Genre,
+  Playlist,
   DurationProgress,
 } from '../Components/SongInfo';
 import Images from '../Images';
 import Colors from '../Colors';
 import Constants from '../Constants';
+const chatUrl =
+  'https://chat.upfm.co.nz/embed/474247737798426644?username=Live-Listener';
 
 LogBox.ignoreAllLogs();
 
 const HomeScreen = ({navigation}) => {
-  WebSocketService();
-
   const showChat = () => {
-    navigation.navigate('webV', {action: 'chat'});
+    Linking.canOpenURL(chatUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(chatUrl);
+      } else {
+        console.log('Don\'t know how to open URI: ' + this.props.url);
+      }
+    });
   };
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.mainContainer}>
+      <BlurView
+        style={styles.absolute}
+        viewRef={this.state.viewRef}
+        blurType="light"
+        blurAmount={3}
+        blurRadius={5}
+      />
       <StatusBar
         translucent
         barStyle="light-content"
@@ -91,7 +106,7 @@ const HomeScreen = ({navigation}) => {
                   {translateX: Constants.Dimension.ScreenHeight(0.2)},
                 ],
               }}>
-              <Genre />
+              <Playlist />
             </View>
           </View>
           <View style={{width: '50%'}}>
@@ -113,7 +128,7 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.bottomContB}>
           <RecentSongs style={styles.list} />
           <PlayerControls style={styles.play} />
-          <Volume style={styles.volume} />
+          <Volume vol={1} style={styles.volume} />
         </View>
       </View>
     </TouchableOpacity>

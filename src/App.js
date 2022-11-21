@@ -7,18 +7,20 @@
  */
 
 import React, {useEffect} from 'react';
+import {BackHandler, Alert} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
-import MyWebView from './screens/WebView';
-
+import TrackPlayer from 'react-native-track-player';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/messaging';
 import {PushController, subscribeTopic} from './services/PushController';
+import {WebSocketService} from './services';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  WebSocketService();
   const _handleNotificationOpen = () => {
     // console.log('i am handling notification');
   };
@@ -27,6 +29,28 @@ const App = () => {
 
   useEffect(() => {
     subscribeTopic('upfm_live');
+  }, []);
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Confirm!', 'Do you want to exit?', [
+        {
+          text: 'YES',
+          onPress: () => {
+            TrackPlayer.reset();
+            BackHandler.exitApp();
+          },
+        },
+        {text: 'Cancel', onPress: () => null, style: 'cancel'},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   async function getCurrentToken() {
@@ -79,7 +103,6 @@ const App = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="webV" component={MyWebView} />
       </Stack.Navigator>
     </NavigationContainer>
   );

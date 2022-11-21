@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import SvgIcon from './SvgIcons';
-import SystemSetting from 'react-native-system-setting';
 import Slider from '@react-native-community/slider';
 
 import Colors from '../Colors';
@@ -11,15 +10,18 @@ import TrackPlayer from 'react-native-track-player';
 const Volume = props => {
   const [volVisible, setVolVisible] = useState(0);
   const [volumeLevel, setVolumeLevel] = useState(1);
+  const [initvol, setInitvol] = useState(0);
 
   const showVolume = () => {
     setVolVisible(!0);
+    setInitvol(volumeLevel);
   };
 
   const onVolChange = vol => {
-    TrackPlayer.setVolume(vol);
     setVolumeLevel(vol);
+    TrackPlayer.setVolume(vol);
   };
+
   return (
     <>
       <TouchableOpacity
@@ -31,6 +33,7 @@ const Volume = props => {
         {...props}>
         <SvgIcon name="volume" />
       </TouchableOpacity>
+
       {volVisible == 1 && (
         <TouchableOpacity activeOpacity={1} style={styles.modal}>
           <SvgIcon name="bottomModal" />
@@ -43,7 +46,7 @@ const Volume = props => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonB}>
             <Slider
-              value={volumeLevel}
+              value={initvol}
               thumbTintColor={Colors.coquelicot}
               minimumTrackTintColor={Colors.coquelicot}
               maximumTrackTintColor={Colors.coquelicot}
@@ -75,8 +78,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 137,
     right: 37,
-    width: 20,
-    height: 20,
+    width: 47,
+    height: 47,
   },
   buttonB: {
     bottom: 99,

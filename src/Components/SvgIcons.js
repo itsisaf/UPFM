@@ -439,30 +439,46 @@ const SvgIcon = props => {
         onPress={props.onPress}
         height="100%"
         width="100%"
-        // viewBox="0 0 {props.width} {props.height}"
+        // viewBox="0 0 47 47"
         preserveAspectRatio="none"
         fill={'red'}
         xmlns="http://www.w3.org/2000/svg"
         {...props}>
-        <G id="Group_1121" data-name="Group 1121">
-          <G id="Group_1119" data-name="Group 1119" transform="translate(0 0)">
+        <G
+          id="Group_4372"
+          data-name="Group 4372"
+          transform="translate(-305 -57)">
+          <G
+            id="Ellipse_194"
+            data-name="Ellipse 194"
+            transform="translate(305 57)"
+            fill="none"
+            stroke="#f23500"
+            stroke-width="1">
+            <Circle cx="23.5" cy="23.5" r="23.5" stroke="none" />
+            <Circle cx="23.5" cy="23.5" r="23" fill="none" />
+          </G>
+          <G
+            id="Group_1118"
+            data-name="Group 1118"
+            transform="translate(35.014 -15.658)">
             <Line
               id="Line_2"
               data-name="Line 2"
               x2="24"
-              transform="translate(0 0) rotate(45)"
+              transform="translate(285.172 87.672) rotate(45)"
               fill="none"
-              stroke={props.color ?? '#f5efed'}
-              strokeWidth={props.stw ?? '2'}
+              stroke="#f23500"
+              stroke-width="2"
             />
             <Line
               id="Line_64"
               data-name="Line 64"
               x2="24"
-              transform="translate(16.971 0) rotate(135)"
+              transform="translate(302.143 87.672) rotate(135)"
               fill="none"
-              stroke={props.color ?? '#f5efed'}
-              strokeWidth={props.stw ?? '2'}
+              stroke="#f23500"
+              stroke-width="2"
             />
           </G>
         </G>

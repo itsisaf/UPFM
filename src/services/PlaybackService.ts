@@ -3,15 +3,15 @@ import TrackPlayer, { Event, State } from 'react-native-track-player';
 let wasPausedByDuck = false;
 
 export async function PlaybackService() {
-  TrackPlayer.addEventListener(Event.RemotePause, () => {
-    console.log('Event.RemotePause');
-    TrackPlayer.pause();
-  });
+  // TrackPlayer.addEventListener(Event.RemotePause, () => {
+  //   console.log('Event.RemotePause');
+  //   TrackPlayer.pause();
+  // });
 
-  TrackPlayer.addEventListener(Event.RemotePlay, () => {
-    console.log('Event.RemotePlay');
-    TrackPlayer.play();
-  });
+  // TrackPlayer.addEventListener(Event.RemotePlay, () => {
+  //   console.log('Event.RemotePlay');
+  //   TrackPlayer.play();
+  // });
 
   TrackPlayer.addEventListener(Event.RemoteNext, () => {
     console.log('Event.RemoteNext');
